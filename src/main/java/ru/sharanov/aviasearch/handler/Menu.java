@@ -1,5 +1,6 @@
 package ru.sharanov.aviasearch.handler;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.sharanov.aviasearch.service.FlightsService;
 
@@ -8,13 +9,10 @@ import java.util.Scanner;
 @Component
 public class Menu {
 
-    private final FlightsService flightService;
+    @Autowired
+    private static FlightsService flightService;
 
-    Menu(FlightsService flightService) {
-        this.flightService = flightService;
-    }
-
-    public  void mainMenu() {
+    public static void mainMenu() {
         System.out.println("""
                 Главное меню
                                 
@@ -43,7 +41,7 @@ public class Menu {
     private static void showFlight() {
     }
 
-    private void findFlight() {
+    private static void findFlight() {
         System.out.println("Введите данные рейса:\n ХХХХ - номер рейса: ");
         String flightNumber = new Scanner(System.in).nextLine();
         System.out.println("ДД/ММ/ГГГГ - дата рейса: ");
