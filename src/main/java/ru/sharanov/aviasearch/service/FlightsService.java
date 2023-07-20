@@ -8,9 +8,10 @@ import ru.sharanov.aviasearch.model.Flight;
 import ru.sharanov.aviasearch.repositoris.AirportRepository;
 import ru.sharanov.aviasearch.repositoris.FlightRepository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 @Service
 public class FlightsService {
@@ -31,8 +32,8 @@ public class FlightsService {
     }
 
     private void addFlight() {
-
-        ArrayList<String> components = AddMenu.addFlight();
+        AddMenu addMenu = new AddMenu();
+        ArrayList<String> components = addMenu.addFlight();
         String flightNumber = components.get(0);
         String fullTime = components.get(1) + " " + components.get(2);
         String durationFlight = components.get(3);
@@ -40,7 +41,7 @@ public class FlightsService {
         String arriveAirportCodeIATA = components.get(5);
         String price = components.get(6);
 
-        LocalDate departureTimeDate = LocalDate.parse(fullTime);
+        LocalDateTime departureTimeDate = LocalDateTime.parse(fullTime);
         LocalTime durationFlightTime = LocalTime.parse(durationFlight);
         double priceDigit = Double.parseDouble(price);
         Airport departureAirport = airportRepository.findAll().stream()
@@ -52,13 +53,16 @@ public class FlightsService {
                 durationFlightTime, departureAirport,
                 arriveAirport, priceDigit);
         flightRepository.save(flight);
-
     }
 
     private void showFlights() {
-
+        flightRepository.findAll().forEach(System.out::println);
     }
 
     private void findFlightByNumber() {
+        System.out.println("Введите номер рейса в формате XXXX: ");
+        String number = new Scanner(System.in).nextLine();
+        Flight flight = flightRepository.findFlightByNumber(number);
+        System.out.println(flight);
     }
 }

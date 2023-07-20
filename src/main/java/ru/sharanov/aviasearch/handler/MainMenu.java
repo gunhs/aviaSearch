@@ -20,13 +20,4 @@ public class MainMenu {
 
        return new Scanner(System.in).nextLine();
     }
-
-    private static void findFlightByNumber() {
-
-    }
-
-    private static void showFlight() {
-    }
-
-
 }
