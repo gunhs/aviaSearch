@@ -1,5 +1,7 @@
 package ru.sharanov.aviasearch.service;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import ru.sharanov.aviasearch.handler.AddMenu;
 import ru.sharanov.aviasearch.handler.MainMenu;
@@ -17,22 +19,24 @@ import java.util.Scanner;
 public class FlightsService {
     private final FlightRepository flightRepository;
     private final AirportRepository airportRepository;
+    private final AddMenu addMenu;
 
-    public FlightsService(FlightRepository flightRepository, AirportRepository airportRepository) {
+
+    public FlightsService(FlightRepository flightRepository, AirportRepository airportRepository, AddMenu addMenu, MainMenu mainMenu, ApplicationContext applicationContext) {
         this.flightRepository = flightRepository;
         this.airportRepository = airportRepository;
-        String menuPoint = MainMenu.mainMenu();
+        this.addMenu = addMenu;
+        String menuPoint = mainMenu.mainMenu();
         switch (menuPoint) {
             case "1" -> addFlight();
             case "2" -> showFlights();
             case "3" -> findFlightByNumber();
-            case "0" -> System.exit(1);
+            case "0" ->SpringApplication.exit(applicationContext);
             default -> System.out.println("Введите пункт меню");
         }
     }
 
     private void addFlight() {
-        AddMenu addMenu = new AddMenu();
         ArrayList<String> components = addMenu.addFlight();
         String flightNumber = components.get(0);
         String fullTime = components.get(1) + " " + components.get(2);

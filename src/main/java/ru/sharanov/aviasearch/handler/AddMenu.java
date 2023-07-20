@@ -1,10 +1,12 @@
 package ru.sharanov.aviasearch.handler;
 
+import org.springframework.stereotype.Component;
 import ru.sharanov.aviasearch.repositoris.AirportRepository;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+@Component
 public class AddMenu {
 
     private final AirportRepository airportRepository;
@@ -19,43 +21,43 @@ public class AddMenu {
         String flightNumber = "";
         do {
             flightNumber = new Scanner(System.in).nextLine();
-        } while (checkNumber(flightNumber));
+        } while (!checkNumber(flightNumber));
         System.out.println("ДД/ММ/ГГГГ - дата рейса: ");
         String departureDate;
         do {
             departureDate = new Scanner(System.in).nextLine();
-        } while (checkDepartureDate(departureDate));
+        } while (!checkDepartureDate(departureDate));
         System.out.println("ЧЧ:ММ - время вылета: ");
         String departureTime;
         do {
             departureTime = new Scanner(System.in).nextLine();
-        } while (checkDepartureTime(departureTime));
+        } while (!checkDepartureTime(departureTime));
         System.out.println("ХХ.ХХ - длительность полёта: ");
         String durationFlight;
         do {
             durationFlight = new Scanner(System.in).nextLine();
-        } while (checkDurationFlight(durationFlight));
+        } while (!checkDurationFlight(durationFlight));
         System.out.println("ХХХ - аэропорт вылета: ");
         String departureAirport;
         do {
             departureAirport = new Scanner(System.in).nextLine();
-        } while (checkDepartureAirport(departureAirport));
+        } while (!checkDepartureAirport(departureAirport));
         System.out.println("ХХХ - аэропорт назначения: ");
         String arriveAirport;
         do {
             arriveAirport = new Scanner(System.in).nextLine();
-        } while (checkArriveAirport(arriveAirport));
+        } while (!checkArriveAirport(arriveAirport));
         System.out.println(".ХХ - стоимость билета: ");
         String price;
         do {
             price = new Scanner(System.in).nextLine();
-        } while (checkPrice(price));
+        } while (!checkPrice(price));
         result.add(flightNumber.toUpperCase());
         result.add(departureDate);
         result.add(departureTime);
         result.add(durationFlight);
-        result.add(departureAirport);
-        result.add(arriveAirport);
+        result.add(departureAirport.toUpperCase());
+        result.add(arriveAirport.toUpperCase());
         result.add(price);
         return result;
     }

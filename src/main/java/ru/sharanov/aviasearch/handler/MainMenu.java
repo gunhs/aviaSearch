@@ -7,7 +7,7 @@ import java.util.Scanner;
 @Component
 public class MainMenu {
 
-    public static String mainMenu() {
+    public String mainMenu() {
         System.out.println("""
                 Главное меню
                                 
@@ -18,6 +18,6 @@ public class MainMenu {
                                 
                 Введите номер пункта меню: """);
 
-       return new Scanner(System.in).nextLine();
+        return new Scanner(System.in).nextLine();
     }
 }
