@@ -16,6 +16,7 @@ import java.util.Objects;
 public class Flight {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String number;
     private LocalDateTime departureTime;
