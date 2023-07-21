@@ -18,12 +18,12 @@ public class AddMenu {
     public ArrayList<String> addFlight() {
         ArrayList<String> result = new ArrayList<>();
         System.out.println("Введите данные рейса:\n ХХХХ - номер рейса: ");
-        String flightNumber = "";
+        String flightNumber = getData(1);
         do {
             flightNumber = new Scanner(System.in).nextLine();
         } while (!checkNumber(flightNumber));
         System.out.println("ДД/ММ/ГГГГ - дата рейса: ");
-        String departureDate;
+        String departureDate = getData(2);
         do {
             departureDate = new Scanner(System.in).nextLine();
         } while (!checkDepartureDate(departureDate));
@@ -59,6 +59,21 @@ public class AddMenu {
         result.add(departureAirport.toUpperCase());
         result.add(arriveAirport.toUpperCase());
         result.add(price);
+        return result;
+    }
+
+    private String getData(int numberOfComponent) {
+        String regex = "";
+        String result = "";
+        if (numberOfComponent == 1) {
+            regex = "[a-zA-Z0-9]{4}";
+        } else if (numberOfComponent == 2){
+            regex = "\\d{2}/\\d{2}/\\d{4}";
+        }
+        while (!result.matches(regex)) {
+            result = new Scanner(System.in).nextLine();
+        }
+
         return result;
     }
 
