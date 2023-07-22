@@ -9,6 +9,7 @@ public class MainMenu {
 
     public String mainMenu() {
         System.out.println("""
+                
                 Главное меню
                                 
                 1 - ввод рейса
@@ -16,7 +17,7 @@ public class MainMenu {
                 3 - поиск рейса по номеру
                 0 - завершение работы
                                 
-                Введите номер пункта меню: """);
+                Введите номер пункта меню:""");
 
         return new Scanner(System.in).nextLine();
     }

@@ -32,6 +32,7 @@ public class FlightsService {
         this.addMenu = addMenu;
         this.mainMenu = mainMenu;
         this.applicationContext = applicationContext;
+        System.out.println("Сервис поиска авиабилетов\n\n");
         callMainMenu();
     }
 
@@ -57,7 +58,9 @@ public class FlightsService {
                 durationFlightTime, departureAirport,
                 arriveAirport, priceDigit);
         flightRepository.save(flight);
-
+        System.out.println("Информаци о рейсе " + flightNumber + " " + components.get(1) + " " + components.get(2) +
+                " " + durationFlight + " " + departureAirportCodeIATA + " " + arriveAirportCodeIATA + " " + price +
+                " добавлена\n");
         callMainMenu();
     }
 
@@ -81,7 +84,10 @@ public class FlightsService {
             case "2" -> showFlights();
             case "3" -> findFlightByNumber();
             case "0" -> SpringApplication.exit(applicationContext);
-            default -> System.out.println("Введите пункт меню");
+            default -> {
+                System.out.println("Введите пункт меню");
+                callMainMenu();
+            }
         }
     }
 }
