@@ -38,6 +38,10 @@ public class FlightsService {
 
     private void addFlight() {
         ArrayList<String> components = addMenu.addFlight();
+        if (components.isEmpty()){
+            callMainMenu();
+            return;
+        }
         String flightNumber = components.get(0);
         String fullTime = components.get(2) + " " + components.get(1);
         String durationFlight = components.get(3);
@@ -72,6 +76,9 @@ public class FlightsService {
     private void findFlightByNumber() {
         System.out.println("Введите номер рейса в формате XXXX: ");
         String number = new Scanner(System.in).nextLine();
+        if (number.equals("0")){
+            callMainMenu();
+        }
         Flight flight = flightRepository.findFlightByNumber(number);
         if (flight != null) {
             System.out.println(flight);
