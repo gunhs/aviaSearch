@@ -53,12 +53,11 @@ public class Flight {
 
     @Override
     public String toString() {
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat time = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat duration = new SimpleDateFormat("HH.mm");
         return "Информация о рейсе: " + number + " " +
-                date.format(departureTime) + " " + time.format(departureTime) + " " +
-                duration.format(durationFlight)+ " " +
+                departureTime.getDayOfMonth() + "/" + departureTime.getMonth().getValue() + "/"
+                + departureTime.getYear() + " " +
+                departureTime.getHour() + ":" + departureTime.getMinute() + " " +
+                durationFlight.getHour() + "." + durationFlight.getMinute() + " " +
                 departureAirport.getCodeIATA() + " " +
                 arriveAirport.getCodeIATA() + " " +
                 price;

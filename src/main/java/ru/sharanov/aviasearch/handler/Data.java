@@ -52,8 +52,14 @@ public class Data {
             }
             codeIATA = numberOfComponent == 5 ? result : "";
             correctIATA = checkAirport(codeIATA);
-            if (numberOfComponent == 5 && !correctIATA){
+            if (numberOfComponent == 5 && !correctIATA) {
                 System.out.println("введён некорректный код аэропорта. Введите существующий код: ");
+            }
+            if (numberOfComponent == 3 && result.matches("^\\d:\\d{2}")) {
+                result = "0" + result;
+            }
+            if (numberOfComponent == 4 && result.matches("^\\d.\\d{2}")) {
+                result = "0" + result;
             }
         }
         while (!result.matches(regex) || !correctIATA);

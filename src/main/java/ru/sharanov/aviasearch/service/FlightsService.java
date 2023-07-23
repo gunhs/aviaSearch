@@ -73,7 +73,11 @@ public class FlightsService {
         System.out.println("Введите номер рейса в формате XXXX: ");
         String number = new Scanner(System.in).nextLine();
         Flight flight = flightRepository.findFlightByNumber(number);
-        System.out.println(flight);
+        if (flight != null) {
+            System.out.println(flight);
+        } else {
+            System.out.println("Информаия о рейсе не найдена");
+        }
         callMainMenu();
     }
 
