@@ -26,7 +26,7 @@ public class Data {
             case 2 -> regex = "\\d{2}/\\d{2}/\\d{4}";
             case 3 -> regex = "(([0-1][0-9])|(2[0-3])):[0-5][0-9]";
             case 4 -> regex = "\\d{2}\\.\\d{2}";
-            case 5 -> regex = "[a-zA-Z]{3}";
+            case 5 -> regex = "[a-zA-ZА-я]{3}";
             case 6 -> regex = "[\\d.]+";
         }
         switch (numberOfComponent) {
