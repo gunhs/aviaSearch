@@ -1,7 +1,5 @@
 package ru.sharanov.aviasearch.service;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import ru.sharanov.aviasearch.handler.AddMenu;
 import ru.sharanov.aviasearch.handler.MainMenu;
@@ -22,18 +20,15 @@ public class FlightsService {
     private final AirportRepository airportRepository;
     private final AddMenu addMenu;
     private final MainMenu mainMenu;
-    private final ApplicationContext applicationContext;
 
 
     public FlightsService(FlightRepository flightRepository, AirportRepository airportRepository, AddMenu addMenu,
-                          MainMenu mainMenu, ApplicationContext applicationContext) {
+                          MainMenu mainMenu) {
         this.flightRepository = flightRepository;
         this.airportRepository = airportRepository;
         this.addMenu = addMenu;
         this.mainMenu = mainMenu;
-        this.applicationContext = applicationContext;
-        System.out.println("Сервис поиска авиабилетов\n\n");
-        callMainMenu();
+        System.out.println("Сервис поиска авиабилетов\n");
     }
 
     private void addFlight() {
@@ -88,13 +83,13 @@ public class FlightsService {
         callMainMenu();
     }
 
-    private void callMainMenu() {
+    public void callMainMenu() {
         String menuPoint = mainMenu.mainMenu();
         switch (menuPoint) {
             case "1" -> addFlight();
             case "2" -> showFlights();
             case "3" -> findFlightByNumber();
-            case "0" -> SpringApplication.exit(applicationContext);
+            case "0" -> System.out.println("Завершение работы программы");
             default -> {
                 System.out.println("Введите пункт меню");
                 callMainMenu();
