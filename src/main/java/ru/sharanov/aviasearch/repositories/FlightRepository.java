@@ -1,4 +1,4 @@
-package ru.sharanov.aviasearch.repositoris;
+package ru.sharanov.aviasearch.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

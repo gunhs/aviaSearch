@@ -11,6 +11,6 @@ import java.util.List;
 @Setter
 @Component
 @ConfigurationProperties(prefix = "parsefiles")
-public class FileJSONList {
-    private List<String> filejsonlist;
+public class FileJsonList {
+    private List<String> fileJsonList;
 }

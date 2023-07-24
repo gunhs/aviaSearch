@@ -5,13 +5,13 @@ import ru.sharanov.aviasearch.handler.AddMenu;
 import ru.sharanov.aviasearch.handler.MainMenu;
 import ru.sharanov.aviasearch.model.Airport;
 import ru.sharanov.aviasearch.model.Flight;
-import ru.sharanov.aviasearch.repositoris.AirportRepository;
-import ru.sharanov.aviasearch.repositoris.FlightRepository;
+import ru.sharanov.aviasearch.repositories.AirportRepository;
+import ru.sharanov.aviasearch.repositories.FlightRepository;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 @Service
@@ -20,7 +20,6 @@ public class FlightsService {
     private final AirportRepository airportRepository;
     private final AddMenu addMenu;
     private final MainMenu mainMenu;
-
 
     public FlightsService(FlightRepository flightRepository, AirportRepository airportRepository, AddMenu addMenu,
                           MainMenu mainMenu) {
@@ -32,16 +31,16 @@ public class FlightsService {
     }
 
     private void addFlight() {
-        ArrayList<String> components = addMenu.addFlight();
-        if (components.isEmpty()){
+        List<String> components = addMenu.addFlight();
+        if (components.isEmpty()) {
             callMainMenu();
             return;
         }
         String flightNumber = components.get(0);
         String fullTime = components.get(2) + " " + components.get(1);
         String durationFlight = components.get(3);
-        String departureAirportCodeIATA = components.get(4);
-        String arriveAirportCodeIATA = components.get(5);
+        String departureAirportCodeIata = components.get(4);
+        String arriveAirportCodeIata = components.get(5);
         String price = components.get(6);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
         DateTimeFormatter formatterForDurationFlight = DateTimeFormatter.ofPattern("HH.mm");
@@ -49,16 +48,15 @@ public class FlightsService {
         LocalTime durationFlightTime = LocalTime.parse(durationFlight, formatterForDurationFlight);
         double priceDigit = Double.parseDouble(price);
         Airport departureAirport = airportRepository.findAll().stream()
-                .filter(a -> a.getCodeIATA().equals(departureAirportCodeIATA)).findFirst().orElse(null);
+                .filter(a -> a.getCodeIata().equals(departureAirportCodeIata)).findFirst().orElse(null);
         Airport arriveAirport = airportRepository.findAll().stream()
-                .filter(a -> a.getCodeIATA().equals(arriveAirportCodeIATA)).findFirst().orElse(null);
+                .filter(a -> a.getCodeIata().equals(arriveAirportCodeIata)).findFirst().orElse(null);
 
-        Flight flight = new Flight(flightNumber, departureTimeDate,
-                durationFlightTime, departureAirport,
+        Flight flight = new Flight(flightNumber, departureTimeDate, durationFlightTime, departureAirport,
                 arriveAirport, priceDigit);
         flightRepository.save(flight);
         System.out.println("Информаци о рейсе " + flightNumber + " " + components.get(1) + " " + components.get(2) +
-                " " + durationFlight + " " + departureAirportCodeIATA + " " + arriveAirportCodeIATA + " " + price +
+                " " + durationFlight + " " + departureAirportCodeIata + " " + arriveAirportCodeIata + " " + price +
                 " добавлена\n");
         callMainMenu();
     }
@@ -71,7 +69,7 @@ public class FlightsService {
     private void findFlightByNumber() {
         System.out.println("Введите номер рейса в формате XXXX: ");
         String number = new Scanner(System.in).nextLine();
-        if (number.equals("0")){
+        if (number.equals("0")) {
             callMainMenu();
         }
         Flight flight = flightRepository.findFlightByNumber(number);

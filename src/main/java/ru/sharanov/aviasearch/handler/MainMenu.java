@@ -6,10 +6,9 @@ import java.util.Scanner;
 
 @Component
 public class MainMenu {
-
     public String mainMenu() {
         System.out.println("""
-                
+                                
                 Главное меню
                                 
                 1 - ввод рейса

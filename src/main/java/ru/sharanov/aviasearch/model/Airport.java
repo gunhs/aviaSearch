@@ -12,5 +12,5 @@ public class Airport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    private String CodeIATA;
+    private String CodeIata;
 }

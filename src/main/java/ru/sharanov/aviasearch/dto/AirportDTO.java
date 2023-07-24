@@ -12,9 +12,9 @@ import lombok.Setter;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AirportDTO {
-    private String city_code;
-    private String country_code;
-    private String time_zone;
+    private String cityCode;
+    private String countryCode;
+    private String timeZone;
     private Boolean flightable;
     private String name;
     private String code;

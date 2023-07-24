@@ -3,61 +3,41 @@ package ru.sharanov.aviasearch.handler;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class AddMenu {
-
     private final Data data;
 
     public AddMenu(Data data) {
         this.data = data;
     }
 
-    public ArrayList<String> addFlight() {
-        ArrayList<String> result = new ArrayList<>();
-        System.out.println("Введите данные рейса:\n ХХХХ - номер рейса: ");
-        String flightNumber = data.getData(1);
-        if (flightNumber.equals("0")){
-            return new ArrayList<>();
+    public List<String> addFlight() {
+        List<String> result = new ArrayList<>();
+        for (int i = 1; i <= 7; i++) {
+            String value = getValue(i);
+            if (value.equals("0")) {
+                return new ArrayList<>();
+            } else {
+                result.add(value);
+            }
         }
-        System.out.println("ДД/ММ/ГГГГ - дата рейса: ");
-        String departureDate = data.getData(2);
-        if (departureDate.equals("0")){
-            return new ArrayList<>();
-        }
-        System.out.println("ЧЧ:ММ - время вылета: ");
-        String departureTime = data.getData(3);
-        if (departureTime.equals("0")){
-            return new ArrayList<>();
-        }
-        System.out.println("ХХ.ХХ - длительность полёта: ");
-        String durationFlight = data.getData(4);
-        if (durationFlight.equals("0")){
-            return new ArrayList<>();
-        }
-        System.out.println("ХХХ - аэропорт вылета: ");
-        String departureAirport = data.getData(5);
-        if (departureAirport.equals("0")){
-            return new ArrayList<>();
-        }
-        System.out.println("ХХХ - аэропорт назначения: ");
-        String arriveAirport = data.getData(5);
-        if (arriveAirport.equals("0")){
-            return new ArrayList<>();
-        }
-        System.out.println(".ХХ - стоимость билета: ");
-        String price = data.getData(6);
-        if (price.equals("0")){
-            return new ArrayList<>();
-        }
-
-        result.add(flightNumber.toUpperCase());
-        result.add(departureDate);
-        result.add(departureTime);
-        result.add(durationFlight);
-        result.add(departureAirport.toUpperCase());
-        result.add(arriveAirport.toUpperCase());
-        result.add(price);
         return result;
+    }
+
+    private String getValue(int i) {
+        String message = "";
+        switch (i) {
+            case 1 -> message = "Введите данные рейса:\n ХХХХ - номер рейса: ";
+            case 2 -> message = "ДД/ММ/ГГГГ - дата рейса: ";
+            case 3 -> message = "ЧЧ:ММ - время вылета: ";
+            case 4 -> message = "ХХ.ХХ - длительность полёта: ";
+            case 5 -> message = "ХХХ - аэропорт вылета: ";
+            case 6 -> message = "ХХХ - аэропорт прилёта: ";
+            case 7 -> message = ".ХХ - стоимость билета: ";
+        }
+        System.out.println(message);
+        return data.getData(i).toUpperCase();
     }
 }

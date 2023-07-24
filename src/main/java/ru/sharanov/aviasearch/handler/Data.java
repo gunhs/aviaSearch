@@ -1,7 +1,7 @@
 package ru.sharanov.aviasearch.handler;
 
 import org.springframework.stereotype.Component;
-import ru.sharanov.aviasearch.repositoris.AirportRepository;
+import ru.sharanov.aviasearch.repositories.AirportRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -20,14 +20,15 @@ public class Data {
         String regex = "";
         String wrongAnswer = "";
         String result;
-        boolean correctIATA = true;
+        boolean correctIata = true;
         switch (numberOfComponent) {
             case 1 -> regex = "[a-zA-Z0-9]{4}";
             case 2 -> regex = "\\d{2}/\\d{2}/\\d{4}";
             case 3 -> regex = "(([0-1][0-9])|(2[0-3])):[0-5][0-9]";
             case 4 -> regex = "\\d{2}\\.\\d{2}";
             case 5 -> regex = "[a-zA-ZА-я]{3}";
-            case 6 -> regex = "[\\d.]+";
+            case 6 -> regex = "[a-zA-ZА-я]{3}";
+            case 7 -> regex = "[\\d.]+";
         }
         switch (numberOfComponent) {
             case 1 -> wrongAnswer = "Введён некорректный номер рейса\nВведите номер в формате ХХХХ, напрмиер 5B7N: ";
@@ -35,12 +36,13 @@ public class Data {
                     "\nВведите дату в формате ДД/ММ/ГГГГ, например 01/01/1970: ";
             case 3 -> wrongAnswer = "Введено некорректное время рейса\nВведите время в формате ЧЧ:ММ, например 06:00: ";
             case 4 -> wrongAnswer = "Введено некорректное время полёта\nВведите время в формате ЧЧ.ММ, например 07.30:";
-            case 5 -> wrongAnswer = "Введён некорректный код аэропорта" +
+            case 5 -> wrongAnswer = "Введён некорректный код аэропорта вылета" +
                     "\nВведите существующий код в формате ХХХ, например KUF: ";
-            case 6 -> wrongAnswer = "Введена некорректная стоимость билета" +
+            case 6 -> wrongAnswer = "Введён некорректный код аэропорта прилёта " +
+                    "\nВведите существующий код в формате ХХХ, например KUF: ";
+            case 7 -> wrongAnswer = "Введена некорректная стоимость билета" +
                     "\nВведите положительно число.Например 5000.00: ";
         }
-
         do {
             result = new Scanner(System.in).nextLine();
             if (result.equals("0")) {
@@ -52,20 +54,20 @@ public class Data {
             if (!result.matches(regex)) {
                 System.out.println(wrongAnswer);
             }
-            if (numberOfComponent == 5) {
-                correctIATA = checkAirport(result);
-                if (!correctIATA) {
+            if (numberOfComponent == 5 || numberOfComponent == 6) {
+                correctIata = checkAirport(result);
+                if (!correctIata) {
                     System.out.println("введён некорректный код аэропорта. Введите существующий код: ");
                 }
             }
             if (numberOfComponent == 3 && result.matches("^\\d:\\d{2}")) {
                 result = "0" + result;
             }
-            if (numberOfComponent == 4 && result.matches("^\\d.\\d{2}")) {
+            if (numberOfComponent == 4 && result.matches("^\\d\\.\\d{2}")) {
                 result = "0" + result;
             }
         }
-        while (!result.matches(regex) || !correctIATA);
+        while (!result.matches(regex) || !correctIata);
         return result;
     }
 
@@ -73,13 +75,16 @@ public class Data {
         result = result.replaceAll("\\.", "/").replaceAll("-", "/");
         try {
             String[] components = result.split("/");
-            if (components[0].matches("^\\d$")) {
-                components[0] = 0 + components[0];
+            String dayOfMonth = components[0];
+            String month = components[1];
+            String year = components[2];
+            if (dayOfMonth.matches("^\\d$")) {
+                dayOfMonth = 0 + dayOfMonth;
             }
-            if (components[1].matches("^\\d$")) {
-                components[1] = 0 + components[1];
+            if (month.matches("^\\d$")) {
+                month = 0 + month;
             }
-            result = components[0] + "/" + components[1] + "/" + components[2];
+            result = dayOfMonth + "/" + month + "/" + year;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate departureTimeDate = LocalDate.parse(result, formatter);
         } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
@@ -89,7 +94,7 @@ public class Data {
         return result;
     }
 
-    private boolean checkAirport(String codeIATA) {
-        return airportRepository.findAll().stream().anyMatch(a -> a.getCodeIATA().equals(codeIATA));
+    private boolean checkAirport(String codeIata) {
+        return airportRepository.findAll().stream().anyMatch(a -> a.getCodeIata().equals(codeIata));
     }
 }

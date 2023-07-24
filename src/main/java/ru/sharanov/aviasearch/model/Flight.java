@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -58,8 +57,8 @@ public class Flight {
                 + departureTime.getYear() + " " +
                 departureTime.getHour() + ":" + departureTime.getMinute() + " " +
                 durationFlight.getHour() + "." + durationFlight.getMinute() + " " +
-                departureAirport.getCodeIATA() + " " +
-                arriveAirport.getCodeIATA() + " " +
+                departureAirport.getCodeIata() + " " +
+                arriveAirport.getCodeIata() + " " +
                 price;
     }
 }
