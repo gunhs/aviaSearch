@@ -15,6 +15,9 @@ public class AviaSearchApplication {
 
     @Bean
     ApplicationRunner applicationRunner(FlightsService flightsService) {
-        return args -> flightsService.callMainMenu();
+        return args -> {
+            System.out.println("Сервис поиска авиабилетов\n");
+            flightsService.callMainMenu();
+        };
     }
 }

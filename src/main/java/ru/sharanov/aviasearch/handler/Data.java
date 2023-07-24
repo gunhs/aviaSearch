@@ -1,5 +1,6 @@
 package ru.sharanov.aviasearch.handler;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sharanov.aviasearch.repositories.AirportRepository;
 
@@ -9,12 +10,9 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 @Component
+@RequiredArgsConstructor
 public class Data {
     private final AirportRepository airportRepository;
-
-    public Data(AirportRepository airportRepository) {
-        this.airportRepository = airportRepository;
-    }
 
     public String getData(int numberOfComponent) {
         String regex = "";

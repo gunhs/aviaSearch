@@ -1,5 +1,6 @@
 package ru.sharanov.aviasearch.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sharanov.aviasearch.handler.AddMenu;
 import ru.sharanov.aviasearch.handler.MainMenu;
@@ -15,20 +16,12 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
+@RequiredArgsConstructor
 public class FlightsService {
     private final FlightRepository flightRepository;
     private final AirportRepository airportRepository;
     private final AddMenu addMenu;
     private final MainMenu mainMenu;
-
-    public FlightsService(FlightRepository flightRepository, AirportRepository airportRepository, AddMenu addMenu,
-                          MainMenu mainMenu) {
-        this.flightRepository = flightRepository;
-        this.airportRepository = airportRepository;
-        this.addMenu = addMenu;
-        this.mainMenu = mainMenu;
-        System.out.println("Сервис поиска авиабилетов\n");
-    }
 
     private void addFlight() {
         List<String> components = addMenu.addFlight();
