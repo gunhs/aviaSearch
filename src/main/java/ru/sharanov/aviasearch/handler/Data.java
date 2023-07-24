@@ -28,7 +28,7 @@ public class Data {
             case 4 -> regex = "\\d{2}\\.\\d{2}";
             case 5 -> regex = "[a-zA-ZА-я]{3}";
             case 6 -> regex = "[a-zA-ZА-я]{3}";
-            case 7 -> regex = "[\\d.]+";
+            case 7 -> regex = "[\\d]+\\.[\\d]{2}";
         }
         switch (numberOfComponent) {
             case 1 -> wrongAnswer = "Введён некорректный номер рейса\nВведите номер в формате ХХХХ, напрмиер 5B7N: ";
@@ -51,8 +51,11 @@ public class Data {
             if (numberOfComponent == 2) {
                 result = correctingDate(result);
             }
-            if (!result.matches(regex)) {
-                System.out.println(wrongAnswer);
+            if (numberOfComponent == 3 && result.matches("^\\d:\\d{2}")) {
+                result = "0" + result;
+            }
+            if (numberOfComponent == 4 && result.matches("^\\d\\.\\d{2}")) {
+                result = "0" + result;
             }
             if (numberOfComponent == 5 || numberOfComponent == 6) {
                 correctIata = checkAirport(result);
@@ -60,11 +63,11 @@ public class Data {
                     System.out.println("введён некорректный код аэропорта. Введите существующий код: ");
                 }
             }
-            if (numberOfComponent == 3 && result.matches("^\\d:\\d{2}")) {
-                result = "0" + result;
+            if (numberOfComponent == 7) {
+                result = result.replaceAll(",", ".");
             }
-            if (numberOfComponent == 4 && result.matches("^\\d\\.\\d{2}")) {
-                result = "0" + result;
+            if (!result.matches(regex)) {
+                System.out.println(wrongAnswer);
             }
         }
         while (!result.matches(regex) || !correctIata);
